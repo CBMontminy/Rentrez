@@ -8,6 +8,10 @@ str(Bburg)
 Sequences=strsplit(Bburg, split="\n\n") # Splits the sequences by the double return "\n\n"
 Sequences=unlist(Sequences) # Unlisting so we can convert to a dataframe
 
-Header=gsub("(^>.*sequence)\\n[ATCG].*", "\\1", Sequences)
-Seq=gsub("^>.*sequence\\n([ATCG].*)", "\\1", Sequences)
-Sequences=data.frame(Name=Header, Sequence=Seq)
+Header=gsub("(^>.*sequence)\\n[ATCG].*", "\\1", Sequences) # Pulls out just the header
+Seq=gsub("^>.*sequence\\n([ATCG].*)", "\\1", Sequences) # Pulls out just the sequence
+Sequences=data.frame(Name=Header, Sequence=Seq) # Creates a dataframe with header and sequence
+
+Sequences$Sequence=gsub("\n", "", Sequences$Sequence) # Removing "\n" from sequences
+
+write.csv(Sequences, "Sequences.csv")
